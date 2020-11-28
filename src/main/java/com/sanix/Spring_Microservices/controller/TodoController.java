@@ -1,6 +1,7 @@
 package com.sanix.Spring_Microservices.controller;
 
 import com.sanix.Spring_Microservices.domain.ToDo;
+import com.sanix.Spring_Microservices.exceptions.TodoNotFoundException;
 import com.sanix.Spring_Microservices.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,11 @@ public class TodoController {
 
     @GetMapping("/users/{name}/todos/{id}")
     public ToDo retrieveTodos(@PathVariable String name, @PathVariable int id){
-        return toDoService.retrieveTodo(id);
+        ToDo todo=toDoService.retrieveTodo(id);
+        if(todo==null){
+            throw new TodoNotFoundException("ToDo not found");
+        }
+        return todo;
     }
 
     @PostMapping("/users/{name}/todos")
