@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class TodoController {
     }
 
     @PostMapping("/users/{name}/todos")
-    ResponseEntity<?> add(@PathVariable String name, @RequestBody ToDo todo){
+    ResponseEntity<?> add(@PathVariable String name, @Valid @RequestBody ToDo todo){
         ToDo createdTodo=toDoService.addTodo(name, todo.getDesc(), todo.getTargetDate(), todo.isDone());
         if(createdTodo==null){
             return ResponseEntity.noContent().build();
