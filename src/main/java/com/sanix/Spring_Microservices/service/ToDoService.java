@@ -2,6 +2,7 @@ package com.sanix.Spring_Microservices.service;
 
 import com.sanix.Spring_Microservices.domain.ToDo;
 import org.springframework.stereotype.Service;
+import springfox.documentation.annotations.Cacheable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,7 @@ public class ToDoService {
         todos.add(new ToDo(3, "Jill", "Learn Hibernate", new Date(),false));
     }
 
+    @Cacheable("todos")
     public List<ToDo> retrieveTodos(String user){
         List<ToDo> filteredTodos=new ArrayList<ToDo>();
         for(ToDo todo:todos){

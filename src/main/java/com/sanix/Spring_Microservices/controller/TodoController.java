@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import springfox.documentation.annotations.Cacheable;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -27,12 +28,13 @@ public class TodoController {
     private ToDoService toDoService;
 
     @GetMapping("/users/{name}/todos")
+    @Cacheable("todos")
     public List<ToDo> retrieveTodos(@PathVariable String name){
         return toDoService.retrieveTodos(name);
     }
 
     @GetMapping("/users/{name}/todos/{id}")
-    public EntityModel<ToDo> retrieveTodos(@PathVariable String name, @PathVariable int id){
+    public EntityModel<ToDo> retrieveTodo(@PathVariable String name, @PathVariable int id){
         ToDo todo=toDoService.retrieveTodo(id);
         if(todo==null){
             throw new TodoNotFoundException("ToDo not found");
